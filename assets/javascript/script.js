@@ -15,9 +15,11 @@ var trainDes = "";
 var trainTime = "";
 var trainFreq = "";
 
-$('#submit').on('click', function(event){
+$('#submit').on('click', function (event) {
     event.preventDefault();
+
     
+
     trainName = $('#trainName').val().trim();
     trainDes = $('#trainDes').val().trim();
     trainTime = $('#trainTime').val().trim();
@@ -27,4 +29,36 @@ $('#submit').on('click', function(event){
     console.log('trainTime', trainTime);
     console.log('trainfreq', trainFreq);
     console.log('trainName', trainName);
+
+    database.ref().push({
+        trainName: trainName,
+        trainDes: trainDes,
+        trainTime: trainTime,
+        trainFreq: trainFreq
+
+
+
+    });
+    $('#trainName').val("");
+    $('#trainDes').val("");
+    $('#trainTime').val("");
+    $('#trainFreq').val("");
+});
+
+database.ref().on('child_added', function (childSnapshot) {
+    console.log(childSnapshot.val());
+    console.log(childSnapshot.val().trainName);
+    console.log(childSnapshot.val().trainDes);
+    console.log(childSnapshot.val().trainTime);
+    console.log(childSnapshot.val().trainFreq);
+
+    var tableRow = $('<tr>');
+    var trainTd = tableRow.html('<td>' + childSnapshot.val().trainName + '</td> <td>' + childSnapshot.val().trainDes + '</td> <td>' + childSnapshot.val().trainTime + '</td> <td>' + childSnapshot.val().trainFreq + '</td>');
+    tableRow.append(trainTd);
+
+    $('#trainBoard').append(tableRow)
+
+}, function (errorObject) {
+    console.log('error: ' + errorObject.code);
+
 });

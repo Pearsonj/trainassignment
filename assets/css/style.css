@@ -1,0 +1,23 @@
+body{
+    background-color: darkgray;
+}
+
+
+#trainTable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+#trainTable td,#trainTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+#trainTable tr:nth-child(even){background-color: darkgray;}
+#trainTable tr:hover {background-color: #ddd;}
+#trainTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color:darkgrey;
+    color: white;
+}
