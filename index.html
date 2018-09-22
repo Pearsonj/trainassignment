@@ -31,12 +31,14 @@
                         <thead>
                             <tr>
                                 <th scope="col-4">Train Name:</th>
-                                <th scope="col-4">Train Time:</th>
-                                <th scope="col-4">Train Number:</th>
+                                <th scope="col-4">Train destination:</th>
+                                <th scope="col-4">Train time(Military Time):</th>
+                                <th scope="col-4">Train Arrival Frequency(In Minutes):</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+
+
                         </tbody>
                     </table>
                 </p>
@@ -46,8 +48,19 @@
     <div class="row">
         <div class="jumbotron jumbotron-fluid col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="container ">
-                <h1 class="display-4">Fluid jumbotron</h1>
-                <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                <h1 class="display-4">Enter Your Train info here!</h1>
+                <p class="lead">
+                    <p>Train Name:</p>
+                    <input id="trainName" class="form-control form-control-sm" type="text" placeholder="Train Name"><br>
+                    <p>Train destination:</p>
+                    <input id="trainDes" class="form-control form-control-sm" type="text" placeholder="Where Ya Headed?"><br>
+                    <p>Train time(Military Time):</p>
+                    <input id="trainTime" class="form-control form-control-sm" type="text" placeholder="HH:MM"><br>
+                    <p>Train Arrival Frequency(In Minutes):</p>
+                    <input id="trainFreq"< class="form-control form-control-sm" type="text" placeholder="How often does it come through?"><br>
+                    <button id="submit" type="submit" class="btn btn-primary">submit</button>
+
+                </p>
             </div>
         </div>
     </div>
@@ -55,6 +68,7 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
     <script src="assets/javascript/script.js"></script>
 </body>
 
