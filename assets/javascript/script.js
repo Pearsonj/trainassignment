@@ -14,16 +14,21 @@ var trainName = "";
 var trainDes = "";
 var trainTime = "";
 var trainFreq = "";
+var timeTill = "";
+
+
 
 $('#submit').on('click', function (event) {
     event.preventDefault();
 
-    
+
 
     trainName = $('#trainName').val().trim();
     trainDes = $('#trainDes').val().trim();
     trainTime = $('#trainTime').val().trim();
     trainFreq = $('#trainFreq').val().trim();
+   
+
 
     console.log('trainDes', trainDes);
     console.log('trainTime', trainTime);
@@ -34,7 +39,8 @@ $('#submit').on('click', function (event) {
         trainName: trainName,
         trainDes: trainDes,
         trainTime: trainTime,
-        trainFreq: trainFreq
+        trainFreq: trainFreq,
+        
 
 
 
@@ -43,22 +49,69 @@ $('#submit').on('click', function (event) {
     $('#trainDes').val("");
     $('#trainTime').val("");
     $('#trainFreq').val("");
+
+    timeTill = moment().diff(moment(trainTime), "minutes");
+
+    var diffTime = timeTill % trainFreq;
+
+    newTimeTill = timeTill - diffTime;
+
+    console.log(newTimeTill);
 });
 
 database.ref().on('child_added', function (childSnapshot) {
+
+    
+
+
+
+
+
+
+
     console.log(childSnapshot.val());
     console.log(childSnapshot.val().trainName);
     console.log(childSnapshot.val().trainDes);
     console.log(childSnapshot.val().trainTime);
     console.log(childSnapshot.val().trainFreq);
+    console.log(childSnapshot.val().timeTill);
+
+    
 
     var tableRow = $('<tr>');
-    var trainTd = tableRow.html('<td>' + childSnapshot.val().trainName + '</td> <td>' + childSnapshot.val().trainDes + '</td> <td>' + childSnapshot.val().trainTime + '</td> <td>' + childSnapshot.val().trainFreq + '</td>');
+    tableRow.addClass('trainTimes');
+    var trainTd = tableRow.html('<td>' + childSnapshot.val().trainName + '</td> <td>' + childSnapshot.val().trainDes + '</td> <td>' + childSnapshot.val().trainTime + '</td> <td>' + childSnapshot.val().trainFreq + '</td>' + '<td>' +  + '</td>');
     tableRow.append(trainTd);
 
+
+
     $('#trainBoard').append(tableRow)
+
+    // timeTill = childSnapshot.val().trainTime;
+    
+    // var firstConvert = moment(timeTill, "HH:mm").subtract(1, "years");
+
+    // var currentTime = moment();
+    // console.log(
+    // moment(currentTime).format("hh:mm"));
+
+    // var diffTime = moment(timeTill).diff(moment(firstConvert), "minutes");
+    // console.log(diffTime);
+
+    // var tRemaining = diffTime % childSnapshot.val().trainFreq;
+    // console.log(tRemaining);
+    
+    // var tTillTrain = childSnapshot.val().trainFreq - tRemaining;
+    // console.log(tTillTrain);
+
+    // var nextTrain = moment().add(tTillTrain, 'minutes');
+    // console.log(moment(nextTrain).format("hh:mm"));
+
 
 }, function (errorObject) {
     console.log('error: ' + errorObject.code);
 
+    
+
 });
+
