@@ -23,34 +23,47 @@ $('#submit').on('click', function (event) {
     trainDes = $('#trainDes').val().trim();
     trainTime = $('#trainTime').val().trim();
     trainFreq = $('#trainFreq').val().trim();
-    
+
 
     console.log('trainDes', trainDes);
     console.log('trainTime', trainTime);
     console.log('trainfreq', trainFreq);
     console.log('trainName', trainName);
 
-    var firstConvert = moment(trainTime, "HH:mm").subtract(1, "years");
 
-    var currentTime = moment();
-    console.log(
-        moment(currentTime).format("hh:mm"));
 
-    var diffTime = moment(currentTime).diff(moment(firstConvert), "minutes");
-    console.log(diffTime);
 
-    var tRemaining = diffTime % trainFreq;
-    console.log(tRemaining);
 
-    var tTillTrain = trainFreq - tRemaining;
-    console.log(tTillTrain);
-    timeTill = moment().diff(moment(trainTime), "minutes");
 
-    var diffTime = trainTime % trainFreq;
+    // var firstConvert = moment(trainTime, "HH:mm").subtract(1, "years");
+    // console.log(firstConvert);
 
-    newTimeTill = trainTime - diffTime;
+    // var currentTime = moment();
+    // console.log(
+    //     moment(currentTime).format("hh:mm"));
 
-    console.log(newTimeTill);
+    // var diffTime = moment(currentTime).diff(moment(firstConvert), "minutes");
+    // console.log(diffTime);
+
+    // var tRemaining = diffTime % trainFreq;
+    // console.log(tRemaining);
+
+    // var tTillTrain = trainFreq - tRemaining;
+    // console.log(tTillTrain);
+
+    // var nextTrain = moment().add(diffTimes, 'minutes');
+    // console.log(moment(nextTrain).format("hh:mm"));
+
+
+
+
+    // var diffTime = trainTime % trainFreq;
+
+    // var newTimeTill = trainTime - diffTime;
+
+
+    // console.log(newTimeTill, "minutes");
+    // timeTill = moment().diff(moment(trainTime, "minutes"));
 
 
     database.ref().push({
@@ -58,23 +71,43 @@ $('#submit').on('click', function (event) {
         trainDes: trainDes,
         trainTime: trainTime,
         trainFreq: trainFreq,
-        timeTill:tTillTrain
-        
+
+
     });
 
-    
-    var nextTrain = moment().add(tTillTrain, 'minutes');
-    console.log(moment(nextTrain).format("hh:mm"));
+
+
 
     $('#trainName').val("");
     $('#trainDes').val("");
     $('#trainTime').val("");
     $('#trainFreq').val("");
 
-    
+
 });
 
 database.ref().on('child_added', function (childSnapshot) {
+
+    var convert = moment("traintime " + trainTime, "HH:mm").subtract(1, "years");
+    console.log(convert);
+
+    var currentTime = moment();
+    console.log("current Time " + moment(currentTime).format("hh:mm"));
+
+    var diffTime = moment().diff(moment(convert), "minutes");
+    console.log("Difference in time: " + diffTime);
+
+    var tRemainder = diffTime % trainFreq;
+    console.log(tRemainder);
+
+    var minutesTillNext = trainFreq - tRemainder;
+    console.log("minutes till next train: " + minutesTillNext);
+
+    var nextTrain = moment().add(minutesTillNext, "minutes");
+    console.log("arrival time: " + moment(nextTrain).format("hh:mm"));
+
+
+
 
     console.log(childSnapshot.val());
     console.log(childSnapshot.val().trainName);
@@ -92,4 +125,6 @@ database.ref().on('child_added', function (childSnapshot) {
 
 }, function (errorObject) {
     console.log('error: ' + errorObject.code);
+
+
 });
